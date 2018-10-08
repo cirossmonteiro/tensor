@@ -1,6 +1,20 @@
 # tensor
 tensor computation
 
+Suppose you want an 3-order tensor, then you type:
+
+```
+Tensor T;
+int ind1 = 3, ind2 = 4, ind3 = 5;
+int dim[] = {ind1, ind2, ind3};
+DeclaringTensor(&T, dim, 3);
+```
+
+If you want to begin with only zeros:
+```
+InitTensorByZero(T);
+```
+
 ```
 typedef struct tensor {
     int dimension; // order
