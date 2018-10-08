@@ -1,6 +1,7 @@
 # tensor
 tensor computation
 
+'''
 typedef struct tensor {
     int dimension; // order
     int *dimensions;
@@ -35,3 +36,4 @@ int TensorProduct (Tensor T1, Tensor T2, Tensor T3)
 int TensorExpandArray(int *I, int N, int i, int j, int k) // add 'k' to array I in positions 'i' and 'j'
 
 int TensorContraction(Tensor T1, Tensor T2, int i, int j)
+'''
