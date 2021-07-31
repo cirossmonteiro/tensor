@@ -2,6 +2,8 @@
 #ifndef INDEX_HPP
 #define INDEX_HPP
 #include <cstddef>
+#include <iostream>
+using namespace std;
 
 class Index {
   unsigned int size = 0;
@@ -15,6 +17,10 @@ class Index {
     void copy(Index new_index); // done
     unsigned int get_size(); // done
     unsigned int &operator[](int index); // done
+    friend string &operator<<(string &ac, Index &index);// done
+    friend ostream &operator<<(ostream &out, Index &index);// done
+    void print(); // done
+    string get_string(); // done
 };
 
 #endif
