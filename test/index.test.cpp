@@ -17,11 +17,14 @@ int main() {
   output += to_string(size-1);
 
   // main
-  Index target(size, indexes);
+  Index target1;
+  Index target2(size);
+  Index target3(size, indexes);
+  Index target4(target3);
   for (int i = 0; i < size; i++) {
-    assert(target[i] == i);
+    assert(target4[i] == i);
   }
-  assert(target.get_size() == size);
-  assert(output.compare(target.get_string()) == 0);
+  assert(target4.get_size() == size);
+  assert(output.compare(target4.get_string()) == 0);
   return 0;
 }

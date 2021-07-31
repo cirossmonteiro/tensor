@@ -12,10 +12,10 @@ Index::Index() {
 
 }
 
-void Index::copy(Index index) {
+void Index::copy(Index &index) {
   size = index.get_size();
   if(!values) {
-    delete values;
+    delete[] values;
   }
   values = new unsigned int[size];
   for(int i = 0; i < size; i++) {

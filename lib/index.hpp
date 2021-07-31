@@ -14,7 +14,7 @@ class Index {
     Index(unsigned int new_size); // done
     Index(unsigned int new_size, unsigned int *new_values); // done
     Index(Index &index); // done
-    void copy(Index new_index); // done
+    void copy(Index &new_index); // done
     unsigned int get_size(); // done
     unsigned int &operator[](int index); // done
     friend string &operator<<(string &ac, Index &index);// done
