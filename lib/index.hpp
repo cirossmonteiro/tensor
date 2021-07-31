@@ -18,7 +18,7 @@ class Index {
     unsigned int get_size(); // done
     unsigned int &operator[](int index); // done
     friend string &operator<<(string &ac, Index &index);// done
-    friend ostream &operator<<(ostream &out, Index &index);// done
+    friend ostream &operator<<(ostream& out, Index &index);// done
     void print(); // done
     string get_string(); // done
 };

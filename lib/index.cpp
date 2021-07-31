@@ -4,8 +4,10 @@
 using namespace std;
 
 Index::~Index() {
-  delete[] values;
-  values = NULL;
+  if(!values) {
+    delete[] values;
+    values = NULL;
+  }
 }
 
 Index::Index() {
@@ -81,5 +83,13 @@ string &operator<<(string &ac, Index &index) {
 }
 
 ostream &operator<<(ostream& out, Index &index) {
-  return out << "" << index;
+  int size = index.get_size();
+  if (size == 0) {
+    return out;
+  }
+  for(int i = 0; i < size - 1; i++) {
+    out << to_string(index[i]) + ' ';
+  }
+  out << to_string(index[size-1]);
+  return out;
 }
