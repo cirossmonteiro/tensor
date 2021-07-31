@@ -93,3 +93,9 @@ ostream &operator<<(ostream& out, Index &index) {
   out << to_string(index[size-1]);
   return out;
 }
+
+void Index::set_zero() {
+  for(int i = 0; i < size - 1; i++) {
+    values[i] = 0;
+  }
+}

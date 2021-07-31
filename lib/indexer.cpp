@@ -107,3 +107,7 @@ ostream &operator<<(ostream& out, Indexer &indexer) {
   out << indexer.index();
   return out;
 }
+
+void Indexer::set_zero() {
+  current.set_zero();
+}

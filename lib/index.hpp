@@ -21,6 +21,7 @@ class Index {
     friend ostream &operator<<(ostream& out, Index &index);// done
     void print(); // done
     string get_string(); // done
+    void set_zero();
 };
 
 #endif

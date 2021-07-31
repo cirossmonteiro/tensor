@@ -1,12 +1,14 @@
 #include <iostream>
 #include <string>
 #include <cassert>
+#include "test.hpp"
 #include "../lib/index.hpp"
 using namespace std;
 
-int main() {
+int index_test() {
   // preparing
-  int size = 10;
+  cout << "index test" << endl;
+  int size = 100;
   string output = "";
   unsigned int indexes[size];
   for (int i = 0; i < size-1; i++) {
