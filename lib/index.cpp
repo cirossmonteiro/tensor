@@ -5,6 +5,10 @@ Index::~Index() {
   values = NULL;
 }
 
+Index::Index() {
+  
+}
+
 void Index::copy(Index index) {
   size = index.get_size();
   if(!values) {
