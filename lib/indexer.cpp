@@ -1,11 +1,14 @@
 #include <stdexcept>
+#include <iostream>
 #include "index.hpp"
 #include "indexer.hpp"
+using namespace std;
 
 Indexer::~Indexer() {
-  delete[] dimensions;
-  dimensions = NULL;
-  delete &current;
+  if(!dimensions) {
+    delete[] dimensions;
+    dimensions = NULL;
+  }
 }
 
 Indexer::Indexer() {
@@ -20,15 +23,16 @@ Indexer::Indexer(unsigned int new_size, unsigned int *new_dimensions) { // to do
   return;
 }
 
-Indexer::Indexer(Index &index, unsigned int *new_dimensions) {
+Indexer::Indexer(Index index, unsigned int *new_dimensions) {
   current.copy(index);
+  dimensions = new unsigned int[size()];
   for(int i = 0; i < size(); i++) {
     dimensions[i] = new_dimensions[i];
   }
 };
 
 bool Indexer::is_last_one() {
-  for (int i = 0; i < size(); i++) {
+  for (int i = size()-1; i >= 0; i--) {
     if (current[i] < dimensions[i] - 1) {
       return false;
     }
@@ -36,25 +40,34 @@ bool Indexer::is_last_one() {
   return true;
 }
 
-void Indexer::operator++() {
-  if (is_last_one()) {
-    throw std::invalid_argument("Can't compute next value - the limit's been reached.");
+unsigned int &Indexer::operator[](int index) {
+  return current[index];
+}
+
+unsigned int &Indexer::operator()(int index) {
+  return dimensions[index];
+}
+
+void operator++(Indexer &indexer, int) {
+  if (indexer.is_last_one()) {
+    throw invalid_argument("Can't compute next value - the limit's been reached.");
   } else {
-    for(int i = size() - 1; i >= 0; i++) {
-      if (current[i] < dimensions[i] - 1) {
-        current[i] = current[i] + 1;
+    for(int i = indexer.size() - 1; i >= 0; i--) {
+      if (indexer[i] < indexer(i) - 1) {
+        indexer[i]++;
+        break;
       } else {
-        current[i] = 0;
+        indexer[i] = 0;
       }
     }
   }
 }
 
-void Indexer::next() {
-  for (int i = 0; i < 1; i++) {
-    operator++();
-  }
-}
+// void Indexer::next() {
+//   for (int i = 0; i < 1; i++) {
+//     operator++(0);
+//   }
+// }
 
 unsigned int Indexer::maxAvailable() {
   unsigned int p = 1;
@@ -84,4 +97,13 @@ void Indexer::set_by_int(unsigned int new_value) {
     current[k] = (new_value - r) / p;
     r += current[k]*p;
   }
+}
+
+Index& Indexer::index() {
+  return current;
+}
+
+ostream &operator<<(ostream& out, Indexer &indexer) {
+  out << indexer.index();
+  return out;
 }
