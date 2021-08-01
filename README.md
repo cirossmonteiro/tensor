@@ -1,6 +1,17 @@
 # tensor
 tensor computation
 
+
+Current development:
+- changing implementation from C to C++, using classes instead of structs and operator overloading
+- tests with native assert function
+- applying "header file and implementation file" pattern (.hpp and .cpp)
+
+to run test: ``g++ lib/*.cpp test/*.cpp -o main.test && ./main.test``
+
+
+
+
 Suppose you want an 3-order tensor, then you type:
 
 ```
