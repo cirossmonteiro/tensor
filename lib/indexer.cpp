@@ -20,6 +20,11 @@ Indexer::Indexer(unsigned int new_size) { // to do
 }
 
 Indexer::Indexer(unsigned int new_size, unsigned int *new_dimensions) { // to do
+  current = Index(new_size);
+  dimensions = new unsigned int[size()];
+  for(int i = 0; i < size(); i++) {
+    dimensions[i] = new_dimensions[i];
+  }
   return;
 }
 
@@ -30,6 +35,10 @@ Indexer::Indexer(Index index, unsigned int *new_dimensions) {
     dimensions[i] = new_dimensions[i];
   }
 };
+
+unsigned int *Indexer::get_dimensions() {
+  return dimensions;
+}
 
 bool Indexer::is_last_one() {
   for (int i = size()-1; i >= 0; i--) {

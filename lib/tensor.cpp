@@ -3,6 +3,7 @@
 #include <new>
 #include <iostream>
 #include <cstddef>
+#include <cstdlib>
 using namespace std;
 
 Tensor::~Tensor() {
@@ -12,9 +13,26 @@ Tensor::~Tensor() {
   values = NULL;
 }
 
-bool Tensor::__alloc_values() {
+bool Tensor::__alloc_values(bool init, float a, float b) {
   values = new float[values_dimension];
-  return values != NULL; // if null then allocation failed
+  if (values == NULL) {
+    return false;
+  } else {
+    if (init) {
+      /* initialize random seed: */
+      if (a == b) {
+        for(int i = 0; i < values_dimension; i++) {
+          values[i] = a;
+        }
+      } else {
+        srand (time(NULL));
+        for(int i = 0; i < values_dimension; i++) {
+          values[i] = (float) rand()/RAND_MAX*(b-a) + a;
+        }
+      }
+    }
+    return true;
+  }
 }
 
 void Tensor::__set_order(unsigned int new_order) {
@@ -60,6 +78,12 @@ Tensor::Tensor(unsigned int new_order, unsigned int *new_dimensions, float *new_
     values[i] = new_values[i];
   }
 };
+
+Tensor::Tensor(Indexer indexer, float a, float b) {
+  __set_order(indexer.size());
+  __set_dimensions(indexer.get_dimensions());
+  __alloc_values(true, a, b);
+}
 
 void Tensor::print() {
   // todo: print_whitespace(n)
