@@ -19,14 +19,21 @@ int index_test() {
   output += to_string(size-1);
 
   // main
-  Index target1;
-  Index target2(size);
-  Index target3(size, indexes);
-  Index target4(target3);
+  Index target1, target2, target3, target4;
+  target1 = Index();
+  target2 = Index(size);
+  target3 = Index(size, indexes);
+  target4 = Index(target3);
   for (int i = 0; i < size; i++) {
+    assert(target4[i] == i);
+    target4[i] = i;
     assert(target4[i] == i);
   }
   assert(target4.get_size() == size);
   assert(output.compare(target4.get_string()) == 0);
+  target1.check_internals();
+  target2.check_internals();
+  target3.check_internals();
+  target4.check_internals();
   return 0;
 }

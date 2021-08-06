@@ -3,62 +3,51 @@
 #include "index.hpp"
 using namespace std;
 
-Index::~Index() {
-  if(!values) {
-    delete[] values;
-    values = NULL;
+void Index::check_internals() const {
+  if (size == 0 && values != NULL) {
+    throw "Values is not empty, though size is zero.";
+  } else if (size != 0 && values == NULL) {
+    throw "Values is empty, though size is not zero.";
   }
 }
 
-Index::Index() {
-
-}
-
-void Index::copy(Index &index) {
-  size = index.get_size();
-  if(!values) {
-    delete[] values;
-  }
-  values = new unsigned int[size];
-  for(int i = 0; i < size; i++) {
-    values[i] = index[i];
-  }
-}
-
-Index::Index(unsigned int new_size) {
-  size = new_size;
-  values = new unsigned int[size];
-}
-
-Index::Index(unsigned int new_size, unsigned int *new_values) {
-  // Index(new_size);
-  size = new_size;
-  values = new unsigned int[size];
-  for(int i = 0; i < size; i++) {
-    values[i] = new_values[i];
-  }
-}
-
-Index::Index(Index &index) {
-  copy(index);
-}
 
 unsigned int Index::get_size() {
+  check_internals();
   return size;
 }
 
-unsigned int &Index::operator[](int index) {
-  return values[index];
+unsigned int *Index::get_values() {
+  return values;
+}
+
+unsigned int &Index::operator[](int index) const {
+  check_internals();
+  if (0 < size && 0 <= index && index < size) {
+    return values[index];
+  } else {
+    throw "Index: invalid value to operator[]";
+  }
 }
 
 void Index::print() {
-  for(int i = 0; i < size; i++) {
-    cout << values[i] << ' ';
-  }
-  cout << endl;
+  check_internals();
+  if (size == 0) {
+    cout << "";
+  } else {
+    if (values == NULL) {
+      throw "Values is empty, though size is not zero.";
+    } else {
+      for(int i = 0; i < size; i++) {
+        cout << values[i] << ' ';
+      }
+      cout << endl;
+    }
+  }  
 }
 
 string Index::get_string() {
+  check_internals();
   string ac = "";
   if (size == 0) {
     return ac;
@@ -71,6 +60,7 @@ string Index::get_string() {
 }
 
 string &operator<<(string &ac, Index &index) {
+  index.check_internals();
   int size = index.get_size();
   if (size == 0) {
     return ac;
@@ -83,6 +73,7 @@ string &operator<<(string &ac, Index &index) {
 }
 
 ostream &operator<<(ostream& out, Index &index) {
+  index.check_internals();
   int size = index.get_size();
   if (size == 0) {
     return out;
@@ -95,6 +86,7 @@ ostream &operator<<(ostream& out, Index &index) {
 }
 
 void Index::set_zero() {
+  check_internals();
   for(int i = 0; i < size - 1; i++) {
     values[i] = 0;
   }

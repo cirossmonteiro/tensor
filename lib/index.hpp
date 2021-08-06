@@ -14,9 +14,12 @@ class Index {
     Index(unsigned int new_size); // done
     Index(unsigned int new_size, unsigned int *new_values); // done
     Index(Index &index); // done
-    void copy(Index &new_index); // done
+
+    void check_internals() const;
+    // void copy(Index &new_index); // done
     unsigned int get_size(); // done
-    unsigned int &operator[](int index); // done
+    unsigned int *get_values();
+    unsigned int &operator[](int index) const; // done
     friend string &operator<<(string &ac, Index &index);// done
     friend ostream &operator<<(ostream& out, Index &index);// done
     void print(); // done
